@@ -48,6 +48,8 @@ class FavouritesState extends State<Favourites> {
   }
 }
 Widget getRecipes(context) {
+  List<Recipe> favoriteRecipes =
+  recipes.where((recipe) => recipe.favourite).toList();
   return Expanded(
       child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
@@ -55,7 +57,7 @@ Widget getRecipes(context) {
               crossAxisCount: 2,
               childAspectRatio: 0.8,
               children: List<Widget>.generate(
-                  recipes.length,
+                  favoriteRecipes.length,
                       (index) => Container(
                       padding: const EdgeInsets.all(2.0),
                       child: GestureDetector(
@@ -64,7 +66,7 @@ Widget getRecipes(context) {
                                 context,
                                 MaterialPageRoute(
                                     builder: (_) =>
-                                        RecipeDetails(recipe: recipes[index])));
+                                        RecipeDetails(recipe: favoriteRecipes[index])));
                           },
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -76,8 +78,8 @@ Widget getRecipes(context) {
                                         placeholder: const AssetImage(
                                             'assets/placeholder.png'),
                                         thumbnail:
-                                        AssetImage(recipes[index].image),
-                                        image: AssetImage(recipes[index].image),
+                                        AssetImage(favoriteRecipes[index].image),
+                                        image: AssetImage(favoriteRecipes[index].image),
                                         height: 100,
                                         width: 150,
                                         alignment: Alignment.center,
@@ -149,7 +151,7 @@ Widget getRecipes(context) {
                                             top: 10, bottom: 5),
                                         constraints: const BoxConstraints(),
                                         onPressed: () {},
-                                        icon: recipes[index].favourite
+                                        icon: favoriteRecipes[index].favourite
                                             ? const Icon(
                                           FluentIcons.heart_28_filled,
                                           size: 25,
@@ -160,13 +162,13 @@ Widget getRecipes(context) {
                                           size: 25,
                                         ),
                                       ),
-                                      Text("${recipes[index].duration} min",
+                                      Text("${favoriteRecipes[index].duration} min",
                                           style: const TextStyle(
                                               fontWeight: FontWeight.w500))
                                     ]),
                                 Flexible(
                                   child: Text(
-                                    recipes[index].title,
+                                    favoriteRecipes[index].title,
                                     style: GoogleFonts.sofia(
                                         textStyle: const TextStyle(
                                           fontSize: 15,
@@ -177,7 +179,7 @@ Widget getRecipes(context) {
                                 ),
                                 Flexible(
                                   child: Text(
-                                    recipes[index].description,
+                                    favoriteRecipes[index].description,
                                     style: const TextStyle(
                                       fontSize: 10,
                                     ),
